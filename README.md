@@ -1,43 +1,41 @@
-# CSE4100 System Programming Projects
+# System Programming Portfolio
 
-본 저장소는 시스템 프로그래밍 강의의 프로젝트 과제들을 포함합니다. 각 프로젝트는 리눅스 시스템 프로그래밍의 핵심 개념을 실습하며 구현한 결과물입니다.
+리눅스 시스템 프로그래밍의 핵심 개념을 구현한 프로젝트 모음입니다. 쉘 구현, 자료구조 라이브러리, 네트워크 프로그래밍, 메모리 할당기 등 시스템 레벨 프로그래밍 기술을 다룹니다.
 
-## 프로젝트 정보
+## About
 
-- **학번**: 20221197
-- **이름**: 백서연
-- **이메일**: yorange50@gmail.com
+- **Author**: 백서연
+- **Contact**: yorange50@gmail.com
 
 ## 프로젝트 구조
 
 ```
-cse4100/
-├── prj1_20221197/          # 쉘 구현 프로젝트
-│   ├── document_20221197.pdf
-│   ├── phase1/              # 기본 쉘 구현
-│   ├── phase2/              # 리다이렉션 및 파이프
-│   └── phase3/              # 백그라운드 실행 및 Job Control
-├── prj2_20221197/          # 자료구조 라이브러리
-│   ├── document_20221197.docx
-│   └── [소스 파일들]
-├── prj3_20221197/          # 네트워크 프로그래밍
-│   ├── document.pdf
-│   ├── task_1/              # Stock Server/Client (select 기반)
-│   └── task_2/              # Stock Server/Client (개선 버전)
-└── prj4_20221197/          # 메모리 할당기 구현
-    ├── document.pdf
+.
+├── prj1_20221197/          # Unix Shell Implementation
+│   ├── phase1/              # Basic Shell
+│   ├── phase2/              # Redirection and Pipe
+│   └── phase3/              # Background Execution and Job Control
+├── prj2_20221197/          # Data Structure Library
+│   ├── list.c, list.h
+│   ├── hash.c, hash.h
+│   ├── bitmap.c, bitmap.h
+│   └── main.c
+├── prj3_20221197/          # Network Programming
+│   ├── task_1/              # Stock Server/Client (select-based)
+│   └── task_2/              # Enhanced Version
+└── prj4_20221197/          # Memory Allocator
     └── mm.c
 ```
 
 ---
 
-## Project 1: 쉘 구현 (Shell Implementation)
+## Project 1: Unix Shell Implementation
 
-리눅스의 기본 쉘을 단계적으로 구현한 프로젝트입니다. 프로세스 생성, 파이프, 리다이렉션, 백그라운드 실행 등 쉘의 핵심 기능을 직접 구현합니다.
+리눅스 쉘의 핵심 기능을 구현한 프로젝트입니다. 프로세스 관리, 파이프, 리다이렉션, 백그라운드 실행, Job Control 등 실제 쉘과 동일한 기능을 제공합니다.
 
-### Phase 1: 기본 쉘 구현
+### Phase 1: Basic Shell
 
-**목표**: 기본적인 명령어 실행 기능을 가진 쉘 구현
+**구현 내용**: 기본 명령어 실행 기능을 가진 쉘 구현
 
 **구현 기능**:
 - 명령어 입력 및 파싱
@@ -50,7 +48,7 @@ cse4100/
 
 **주요 파일**:
 - `myshell.c`: 메인 쉘 구현
-- `csapp.c`, `csapp.h`: CS:APP 교재의 유틸리티 함수들
+- `csapp.c`, `csapp.h`: 시스템 프로그래밍 유틸리티 함수
 - `Makefile`: 빌드 설정
 
 **컴파일 및 실행**:
@@ -60,16 +58,23 @@ make
 ./myshell
 ```
 
-**학습 내용**:
+**사용 예시**:
+```bash
+$ ls -la
+$ cd /home/user
+$ exit
+```
+
+**기술 스택**:
 - 프로세스 생성 및 관리 (`fork`, `exec`, `wait`)
-- 프로세스 간 통신의 기본 개념
-- 쉘의 기본 동작 원리
+- 프로세스 간 통신
+- 시스템 콜 활용
 
 ---
 
-### Phase 2: 리다이렉션 및 파이프
+### Phase 2: Redirection and Pipe
 
-**목표**: 리다이렉션(`>`, `<`)과 파이프(`|`) 기능 추가
+**구현 내용**: 리다이렉션(`>`, `<`)과 파이프(`|`) 기능 구현
 
 **구현 기능**:
 - 출력 리다이렉션 (`command > file`)
@@ -93,7 +98,7 @@ make
 ./myshell
 ```
 
-**테스트 예시**:
+**사용 예시**:
 ```bash
 ls | grep test
 cat file.txt | grep keyword | sort
@@ -101,17 +106,17 @@ echo "hello" > output.txt
 cat < input.txt
 ```
 
-**학습 내용**:
+**기술 스택**:
 - 파이프를 통한 프로세스 간 데이터 전달
-- 파일 디스크립터의 개념과 재지정
+- 파일 디스크립터 재지정 (`dup2`)
 - 다중 프로세스 협업 구조
 - 데드락 방지를 위한 파일 디스크립터 관리
 
 ---
 
-### Phase 3: 백그라운드 실행 및 Job Control
+### Phase 3: Background Execution and Job Control
 
-**목표**: 백그라운드 실행과 Job Control 기능 구현
+**구현 내용**: 백그라운드 실행과 Job Control 기능 구현
 
 **구현 기능**:
 - 백그라운드 실행 (`command &`)
@@ -138,7 +143,7 @@ make
 ./myshell
 ```
 
-**테스트 예시**:
+**사용 예시**:
 ```bash
 sleep 10 &
 jobs
@@ -148,11 +153,11 @@ bg %1
 kill %1
 ```
 
-**학습 내용**:
-- Job Control의 개념과 구현 방법
-- 프로세스 그룹과 제어 터미널
-- 시그널 처리 및 비동기 이벤트 관리
-- 리눅스 쉘의 핵심 기능 구현
+**기술 스택**:
+- Job Control 구현
+- 프로세스 그룹 및 제어 터미널 관리
+- 시그널 처리 (`SIGINT`, `SIGTSTP`, `SIGCONT`, `SIGCHLD`)
+- 비동기 이벤트 처리
 
 **실무 활용 사례**:
 - **Docker 컨테이너**: 컨테이너 내부에서 명령어 실행 및 프로세스 관리
@@ -163,9 +168,9 @@ kill %1
 
 ---
 
-## Project 2: 자료구조 라이브러리 (Data Structure Library)
+## Project 2: Data Structure Library
 
-다양한 자료구조를 구현한 라이브러리 프로젝트입니다. 실제 시스템 프로그래밍에서 사용되는 자료구조들을 직접 구현합니다.
+시스템 프로그래밍에서 널리 사용되는 자료구조를 구현한 라이브러리입니다. 타입 독립적 설계와 메모리 효율성을 고려하여 구현했습니다.
 
 ### 구현된 자료구조
 
@@ -206,12 +211,17 @@ make
 ./testlib
 ```
 
-### 학습 내용
+**주요 API**:
+- `list_init()`, `list_insert()`, `list_remove()`: 리스트 연산
+- `hash_insert()`, `hash_find()`, `hash_delete()`: 해시 테이블 연산
+- `bitmap_set()`, `bitmap_get()`, `bitmap_reset()`: 비트맵 연산
+
+### 기술 스택
 
 - 타입 독립적 자료구조 설계
 - 매크로를 활용한 제네릭 프로그래밍
-- 메모리 관리 및 효율성
-- 자료구조의 실제 활용
+- 메모리 효율적 구현
+- 실무 적용 가능한 자료구조
 
 **실무 활용 사례**:
 - **운영체제 커널**: Linux 커널의 리스트, 해시 테이블 (예: `list.h`, `hlist`)
@@ -222,13 +232,13 @@ make
 
 ---
 
-## Project 3: 네트워크 프로그래밍 (Network Programming)
+## Project 3: Network Programming - Concurrent Server
 
-네트워크를 통한 클라이언트-서버 통신을 구현한 프로젝트입니다. Stock Server와 Client를 구현하여 동시성 처리와 네트워크 프로그래밍을 학습합니다.
+네트워크 기반 클라이언트-서버 통신을 구현한 프로젝트입니다. `select()`를 활용한 I/O 다중화로 다중 클라이언트를 동시에 처리하는 서버를 구현했습니다.
 
-### Task 1: Stock Server/Client (select 기반)
+### Implementation: Stock Trading Server (select-based)
 
-**목표**: `select()` 시스템 콜을 사용한 동시성 처리
+**구현 내용**: `select()` 시스템 콜을 사용한 동시성 처리
 
 **구현 기능**:
 - Stock Server: 주식 정보를 관리하는 서버
@@ -256,6 +266,12 @@ make
 ./stockclient localhost 8080
 ```
 
+**주요 기능**:
+- 실시간 주식 정보 조회
+- 주식 거래 (구매/판매)
+- 다중 클라이언트 동시 처리
+- 이진 탐색 트리를 사용한 효율적인 데이터 관리
+
 **주요 구현 사항**:
 - `select()`를 통한 I/O 다중화
 - 파일 디스크립터 집합 관리
@@ -263,11 +279,11 @@ make
 - 이진 탐색 트리를 사용한 주식 데이터 구조
 - 요청 파싱 및 응답 생성
 
-**학습 내용**:
+**기술 스택**:
 - 네트워크 소켓 프로그래밍
-- I/O 다중화 및 동시성 처리
-- 클라이언트-서버 아키텍처
-- 이벤트 기반 프로그래밍
+- I/O 다중화 (`select()`)
+- 동시성 처리
+- 이벤트 기반 아키텍처
 
 **실무 활용 사례**:
 - **웹 서버**: Nginx, Apache의 동시 연결 처리 및 요청 라우팅
@@ -279,14 +295,14 @@ make
 
 ---
 
-### Task 2: Stock Server/Client (개선 버전)
+### Optimization: Enhanced Version
 
-**목표**: Task 1의 개선 및 최적화
+**구현 내용**: 초기 구현의 성능 최적화 및 안정성 개선
 
-**구현 기능**:
-- Task 1의 기능을 기반으로 개선된 버전
-- 성능 최적화 및 버그 수정
-- 추가 기능 구현 (필요 시)
+**개선 사항**:
+- 성능 최적화
+- 버그 수정 및 안정성 향상
+- 코드 리팩토링
 
 **컴파일 및 실행**:
 ```bash
@@ -296,11 +312,16 @@ make
 ./stockclient localhost 8080
 ```
 
+**개선 사항**:
+- 성능 최적화
+- 메모리 관리 개선
+- 에러 처리 강화
+
 ---
 
-## Project 4: 메모리 할당기 구현 (Memory Allocator)
+## Project 4: Custom Memory Allocator
 
-동적 메모리 할당 함수(`malloc`, `free`, `realloc`)를 직접 구현한 프로젝트입니다. 힙 메모리 관리의 핵심 개념을 학습합니다.
+동적 메모리 할당 함수(`malloc`, `free`, `realloc`)를 직접 구현한 프로젝트입니다. 힙 메모리 관리 알고리즘과 메모리 단편화 최소화 기법을 구현했습니다.
 
 ### 구현 기능
 
@@ -324,13 +345,12 @@ make
 
 **주요 파일**:
 - `mm.c`: 메모리 할당기 구현
-- `mm.h`: 인터페이스 정의 (제공됨)
-- `memlib.c`: 메모리 시스템 인터페이스 (제공됨)
+- `mm.h`: 인터페이스 정의
+- `memlib.c`: 메모리 시스템 인터페이스
 
 **컴파일 및 테스트**:
 ```bash
 cd prj4_20221197
-# 제공된 Makefile 사용 (일반적으로 별도 제공)
 make
 ./mdriver  # 메모리 할당기 테스트 드라이버
 ```
@@ -340,11 +360,11 @@ make
 - 처리량 (Throughput)
 - 메모리 단편화 최소화
 
-**학습 내용**:
+**기술 스택**:
 - 힙 메모리 관리 구조
-- 동적 메모리 할당 알고리즘
-- 메모리 단편화 문제 및 해결
-- 시스템 프로그래밍의 메모리 관리
+- 동적 메모리 할당 알고리즘 (First Fit / Best Fit)
+- 메모리 단편화 최소화 (Coalescing)
+- 블록 메타데이터 관리
 
 **실무 활용 사례**:
 - **메모리 관리자**: 운영체제의 힙 관리자, 커널 메모리 할당자
@@ -387,39 +407,31 @@ make clean
 ./[실행파일명]
 ```
 
-### 문서
-
-각 프로젝트에는 상세한 설명이 포함된 문서가 있습니다:
-- `prj1_20221197/document_20221197.pdf`
-- `prj2_20221197/document_20221197.docx`
-- `prj3_20221197/document.pdf`
-- `prj4_20221197/document.pdf`
-
 ---
 
-## 주요 학습 내용 요약
+## 기술 요약
 
-### 시스템 프로그래밍 핵심 개념
+### 핵심 기술
 
 1. **프로세스 관리**
-   - 프로세스 생성 및 종료
+   - 프로세스 생성 및 종료 (`fork`, `exec`, `wait`)
    - 프로세스 간 통신 (파이프, 시그널)
-   - Job Control 및 프로세스 그룹
+   - Job Control 및 프로세스 그룹 관리
 
 2. **파일 시스템**
    - 파일 디스크립터 관리
-   - 리다이렉션 및 파이프
+   - 리다이렉션 및 파이프 구현
    - 파일 I/O 작업
 
 3. **네트워크 프로그래밍**
    - 소켓 프로그래밍
-   - 클라이언트-서버 모델
-   - I/O 다중화
+   - 클라이언트-서버 아키텍처
+   - I/O 다중화 (`select()`)
 
 4. **메모리 관리**
-   - 동적 메모리 할당
-   - 힙 관리 알고리즘
-   - 메모리 효율성
+   - 동적 메모리 할당 알고리즘
+   - 힙 관리 및 단편화 최소화
+   - 메모리 효율성 최적화
 
 5. **동시성 처리**
    - 프로세스 기반 동시성
@@ -439,21 +451,14 @@ make clean
 
 ---
 
-## 참고 자료
+## References
 
 - CS:APP (Computer Systems: A Programmer's Perspective) 3rd Edition
 - Linux 시스템 콜 매뉴얼 (`man` 페이지)
-- 각 프로젝트별 제공 문서
 
 ---
 
-## 라이선스
-
-본 프로젝트는 교육 목적으로 작성되었습니다.
-
----
-
-## 연락처
+## Contact
 
 프로젝트에 대한 문의사항이 있으시면 다음으로 연락해주세요:
 - 이메일: yorange50@gmail.com
